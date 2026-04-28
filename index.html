@@ -15,34 +15,95 @@
     .cursor { animation: blink 1s infinite; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
     .bio { text-align: center; color: #1D9E75; font-size: 13px; margin-bottom: 4px; }
-    .status { text-align: center; color: #555; font-size: 12px; margin-bottom: 2rem; }
-    .status::before { content: "[ "; } .status::after { content: " ]"; }
+    .status { text-align: center; font-size: 12px; margin-bottom: 2rem; }
+    .status.open { color: #1D9E75; }
+    .status.open::before { content: "[ "; } .status.open::after { content: " — open to work ]"; }
+    .section-label { color: #0F6E56; font-size: 11px; margin-bottom: 8px; letter-spacing: 1px; }
+    .card { background: rgba(0,0,0,0.5); border: 1px solid #1a1a1a; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
+    .exp-title { color: #e0e0e0; font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+    .exp-company { color: #1D9E75; font-size: 12px; margin-bottom: 2px; }
+    .exp-period { color: #444; font-size: 11px; }
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .skill { background: rgba(15,110,86,0.15); border: 1px solid #0F6E56; border-radius: 4px; color: #5DCAA5; font-size: 11px; padding: 4px 10px; }
     a { display: block; width: 100%; padding: 13px 16px; margin-bottom: 10px; background: rgba(0,0,0,0.5); border: 1px solid #1D9E75; border-radius: 8px; color: #5DCAA5; font-family: monospace; font-size: 14px; text-decoration: none; }
     a:hover { background: rgba(29,158,117,0.12); }
     .prefix { color: #0F6E56; margin-right: 8px; }
     .arrow { float: right; color: #0F6E56; }
-    hr { border: none; border-top: 1px solid #222; margin: 1.5rem 0; }
+    hr { border: none; border-top: 1px solid #1a1a1a; margin: 1.25rem 0; }
     .footer { text-align: center; color: #333; font-size: 11px; }
   </style>
 </head>
 <body>
   <canvas id="matrix"></canvas>
   <div class="wrap">
+
     <div class="avatar">
       <img src="https://github.com/boyvalentyas-stack.png" alt="avatar" />
     </div>
     <h1>Boy Valentyas Indra G.<span class="cursor">_</span></h1>
-    <p class="bio">> Quality Assurance Engineer</p>
-    <p class="status">available for work</p>
+    <p class="bio">> Quality Assurance Engineer with Experience as BA PM SA when assigned as Solution Engineer</p>
+    <p class="status open">Let’s connect if you want to talk about technology, efficiency, or building scalable digital solutions.</p>
 
+    <hr>
+
+    <!-- Experience -->
+    <p class="section-label">// experience</p>
+    <div class="card">
+      <p class="exp-title">Solution Engineer</p>
+      <p class="exp-company">BFI Finance Indonesia</p>
+      <p class="exp-period">Dec 2024 — Feb 2026</p>
+    </div>
+    <div class="card">
+      <p class="exp-title">Associate Solution Engineer</p>
+      <p class="exp-company">BFI Finance Indonesia</p>
+      <p class="exp-period">Jan 2024 — Nov 2024</p>
+    </div>
+    <div class="card">
+      <p class="exp-title">Associate QA Engineer</p>
+      <p class="exp-company">BFI Finance Indonesia</p>
+      <p class="exp-period">Apr 2023 — Dec 2023</p>
+    </div>
+    <div class="card">
+      <p class="exp-title">Test Engineer</p>
+      <p class="exp-company">AbiShar Technologies Indonesia - Placed on BFI Finance</p>
+      <p class="exp-period">Aug 2021 — Apr 2023</p>
+    </div>
+    <div class="card">
+      <p class="exp-title">IT QA Automation</p>
+      <p class="exp-company">FUSI Solusi Integrasi - Placed on KSEI</p>
+      <p class="exp-period">Feb 2020 — Jul 2021</p>
+    </div>
+
+    <hr>
+
+    <!-- Skills -->
+    <p class="section-label">// skills & tools</p>
+    <div class="skills">
+      <span class="skill">Selenium</span>
+      <span class="skill">Postman</span>
+      <span class="skill">JIRA</span>
+      <span class="skill">Cypress</span>
+      <span class="skill">API Testing</span>
+      <span class="skill">SQL</span>
+      <span class="skill">Manual Testing</span>
+      <span class="skill">Test Planning</span>
+    </div>
+
+    <hr>
+
+    <!-- Links -->
+    <p class="section-label">// find me on</p>
     <a href="https://github.com/boyvalentyas-stack/" target="_blank" rel="noopener noreferrer">
       <span class="prefix">01.</span> GitHub <span class="arrow">-></span>
     </a>
     <a href="https://www.linkedin.com/in/boy-valentyas-indra-gunara-86a9ba181/" target="_blank" rel="noopener noreferrer">
-      <span class="prefix">03.</span> LinkedIn <span class="arrow">-></span>
+      <span class="prefix">02.</span> LinkedIn <span class="arrow">-></span>
     </a>
     <a href="https://www.instagram.com/aceblanc.toujo/" target="_blank" rel="noopener noreferrer">
-      <span class="prefix">04.</span> Instagram <span class="arrow">-></span>
+      <span class="prefix">03.</span> Instagram <span class="arrow">-></span>
+    </a>
+    <a href="https://wa.me/62XXXXXXXXXX" target="_blank" rel="noopener noreferrer">
+      <span class="prefix">04.</span> WhatsApp <span class="arrow">-></span>
     </a>
     <a href="mailto:dev.boyvalentyas@email.com" target="_blank" rel="noopener noreferrer">
       <span class="prefix">05.</span> Email me <span class="arrow">-></span>
@@ -50,6 +111,7 @@
 
     <hr>
     <p class="footer">// built with html & hosted on github pages powered by Claude.AI</p>
+
   </div>
 
   <script>
