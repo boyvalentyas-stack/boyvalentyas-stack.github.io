@@ -8,7 +8,7 @@ A personal link-in-bio page built with HTML & CSS, hosted for free on GitHub Pag
 <!-- Add a screenshot here later -->
 
 ## Built with
-- HTML & CSS
+- HTML & CSS (from Claude.AI)
 - GitHub Pages (free hosting)
 
 ## What I learned
