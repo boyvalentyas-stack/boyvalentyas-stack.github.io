@@ -391,9 +391,7 @@ Listed in the order they appear in the page (reverse chronological):
 
 12 items, in order of appearance:
 
-`JIRA` · `Confluence` · `Google Workspace` · `Microsoft Office` · `Zoom` · `Draw.io` · `Postman` · `Katalon` · `Claude.AI` · `Javascript` · `Phyton` · `Postgre SQL`
-
-> **Note:** "Phyton" and "Postgre SQL" appear to be typographical variants of "Python" and "PostgreSQL". These are reproduced here exactly as they appear in the source file.
+`JIRA` · `Confluence` · `Google Workspace` · `Microsoft Office` · `Zoom` · `Draw.io` · `Postman` · `Katalon` · `Claude.AI` · `Javascript` · `Phyton` · `PostgreSQL`
 
 ---
 
@@ -401,9 +399,7 @@ Listed in the order they appear in the page (reverse chronological):
 
 10 items, in order of appearance:
 
-`Test Strategy` · `Manual Testing` · `Automation Testing` · `API Testing` · `Requirement Gathering` · `System Architechture Design` · `System Integration` · `Project Management` · `Vendor Management` · `Data Analysis`
-
-> **Note:** "Architechture" appears to be a typographical variant of "Architecture". Reproduced here as it appears in the source file.
+`Test Strategy` · `Manual Testing` · `Automation Testing` · `API Testing` · `Requirement Gathering` · `System Architecture Design` · `System Integration` · `Project Management` · `Vendor Management` · `Data Analysis`
 
 ---
 
