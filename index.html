@@ -3,172 +3,693 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Boy Valentyas</title>
-  <link rel="icon" type="image/x-icon" href="main-favicon.ico">
+  <title>Boy Valentyas Indra G. — QA & Solution Engineer</title>
+  <meta name="description" content="Boy Valentyas Indra G. — Quality Assurance & Solution Engineer based in Jakarta, Indonesia. 5+ years experience in QA, BA, PM, and System Integration." />
+  <meta name="author" content="Boy Valentyas Indra G." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Boy Valentyas Indra G. — QA & Solution Engineer" />
+  <meta property="og:description" content="Quality Assurance & Solution Engineer based in Jakarta. Open to work. Let's connect." />
+  <meta property="og:url" content="https://boyvalentyas-stack.github.io" />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" type="image/x-icon" href="main-favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0d0d0d; font-family: monospace; display: flex; justify-content: center; padding: 3rem 1rem; min-height: 100vh; position: relative; overflow-x: hidden; }
-    canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-    .wrap { max-width: 420px; width: 100%; position: relative; z-index: 2; }
-    .avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #1D9E75; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 28px; color: #1D9E75; overflow: hidden; background: #111; }
-    .avatar img { width: 100%; height: 100%; object-fit: cover; }
-    h1 { text-align: center; color: #e0e0e0; font-size: 18px; margin-bottom: 4px; }
-    .cursor { animation: blink 1s infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-    .bio { text-align: center; color: #1D9E75; font-size: 13px; margin-bottom: 4px; }
-    .status { text-align: center; font-size: 12px; margin-bottom: 2rem; }
-    .status.open { color: #1D9E75; }
-    .status.open::before { content: "[ "; } .status.open::after { content: " — open to work ]"; }
-    .section-label { color: #0F6E56; font-size: 11px; margin-bottom: 8px; letter-spacing: 1px; }
-    .card { background: rgba(0,0,0,0.5); border: 1px solid #1a1a1a; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
-    .exp-title { color: #e0e0e0; font-size: 13px; font-weight: 500; margin-bottom: 2px; }
-    .exp-company { color: #1D9E75; font-size: 12px; margin-bottom: 2px; }
-    .exp-period { color: #444; font-size: 11px; }
-    .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-    .skill { background: rgba(15,110,86,0.15); border: 1px solid #0F6E56; border-radius: 4px; color: #5DCAA5; font-size: 11px; padding: 4px 10px; }
-    a { display: block; width: 100%; padding: 13px 16px; margin-bottom: 10px; background: rgba(0,0,0,0.5); border: 1px solid #1D9E75; border-radius: 8px; color: #5DCAA5; font-family: monospace; font-size: 14px; text-decoration: none; }
-    a:hover { background: rgba(29,158,117,0.12); }
-    .prefix { color: #0F6E56; margin-right: 8px; }
-    .arrow { float: right; color: #0F6E56; }
-    hr { border: none; border-top: 1px solid #1a1a1a; margin: 1.25rem 0; }
-    .footer { text-align: center; color: #333; font-size: 11px; }
+    /* ── TOKENS ── */
+    :root {
+      --bg:        #080C0A;
+      --bg2:       #0D1210;
+      --bg3:       #111A16;
+      --surface:   rgba(255,255,255,0.03);
+      --border:    rgba(255,255,255,0.07);
+      --border-hi: rgba(29,200,130,0.35);
+      --green:     #1DC882;
+      --green-dim: #0F6E48;
+      --green-glow:rgba(29,200,130,0.12);
+      --text:      #E8F0EC;
+      --text-mid:  #8AA898;
+      --text-dim:  #4A6458;
+      --mono:      'JetBrains Mono', monospace;
+      --sans:      'Space Grotesk', sans-serif;
+      --radius:    6px;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ── BACKGROUND CANVAS ── */
+    #bgCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    /* ── GLOW ── */
+    .glow-orb {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(29,200,130,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* ── MAIN WRAPPER ── */
+    .page {
+      position: relative;
+      z-index: 2;
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 5rem;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 0.7s ease both;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: 88px;
+      height: 88px;
+      margin-bottom: 1.25rem;
+    }
+    .avatar-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(var(--green), var(--green-dim), var(--green), var(--green-dim), var(--green));
+      animation: spinBorder 6s linear infinite;
+      z-index: 0;
+    }
+    .avatar-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(29,200,130,0.15) 0%, transparent 70%);
+      z-index: -1;
+    }
+    .avatar-img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--bg);
+    }
+
+    .status-dot {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 14px;
+      height: 14px;
+      background: var(--green);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      z-index: 2;
+      box-shadow: 0 0 8px var(--green);
+    }
+    .status-dot::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1px solid var(--green);
+      opacity: 0.5;
+      animation: pulse 2s ease infinite;
+    }
+
+    .name {
+      font-family: var(--mono);
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+    .name .cursor {
+      color: var(--green);
+      animation: blink 1s step-end infinite;
+    }
+
+    .title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green-glow);
+      border: 1px solid var(--border-hi);
+      border-radius: 99px;
+      padding: 0.3rem 0.9rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--green);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.75rem;
+    }
+    .title-badge::before { content: '▸'; font-size: 0.65rem; }
+
+    .bio {
+      font-size: 0.875rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      max-width: 480px;
+      font-weight: 300;
+      margin-bottom: 0.75rem;
+    }
+
+    .open-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--green);
+      letter-spacing: 0.08em;
+    }
+    .open-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse 2s ease infinite;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 2rem 0;
+      position: relative;
+      animation: fadeIn 0.7s 0.2s ease both;
+    }
+    .divider::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 1px;
+      background: var(--green-dim);
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .section-label::before { content: '//'; color: var(--green-dim); }
+
+    /* ── EXPERIENCE CARDS ── */
+    .exp-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0; }
+
+    .exp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.875rem 1rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      gap: 0.15rem 0.5rem;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: transparent;
+      transition: background 0.2s;
+    }
+    .exp-card:hover {
+      border-color: var(--border-hi);
+      background: var(--green-glow);
+    }
+    .exp-card:hover::before { background: var(--green); }
+
+    .exp-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .exp-company {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--green);
+      grid-column: 1;
+      grid-row: 2;
+    }
+    .exp-period {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      grid-column: 2;
+      grid-row: 1 / 3;
+      align-self: center;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* ── SKILL TAGS ── */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-mid);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.3rem 0.65rem;
+      letter-spacing: 0.02em;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      cursor: default;
+    }
+    .tag:hover {
+      color: var(--green);
+      border-color: var(--border-hi);
+      background: var(--green-glow);
+    }
+
+    /* ── LINK BUTTONS ── */
+    .links { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 0.875rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .link-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--green-glow), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .link-btn:hover {
+      border-color: var(--border-hi);
+      transform: translateX(3px);
+    }
+    .link-btn:hover::after { opacity: 1; }
+
+    .link-num {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--green-dim);
+      width: 1.5rem;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .link-icon {
+      font-size: 1rem;
+      width: 1.25rem;
+      text-align: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .link-label {
+      flex: 1;
+      font-size: 0.9rem;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+    .link-sub {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      display: block;
+      margin-top: 1px;
+      font-weight: 400;
+    }
+    .link-arrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--green-dim);
+      transition: color 0.2s, transform 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+    .link-btn:hover .link-arrow {
+      color: var(--green);
+      transform: translateX(3px);
+    }
+    .link-btn.highlight {
+      border-color: var(--border-hi);
+      background: var(--green-glow);
+    }
+    .link-btn.highlight .link-label { color: var(--green); }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      animation: fadeIn 1s 0.5s ease both;
+    }
+    .footer a { color: var(--green-dim); text-decoration: none; }
+    .footer a:hover { color: var(--green); }
+
+    /* ── STAGGER ANIMATION ── */
+    .stagger { opacity: 0; transform: translateY(16px); }
+    .stagger.visible {
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .stagger:nth-child(1) { animation-delay: 0.05s; }
+    .stagger:nth-child(2) { animation-delay: 0.10s; }
+    .stagger:nth-child(3) { animation-delay: 0.15s; }
+    .stagger:nth-child(4) { animation-delay: 0.20s; }
+    .stagger:nth-child(5) { animation-delay: 0.25s; }
+    .stagger:nth-child(6) { animation-delay: 0.30s; }
+    .stagger:nth-child(7) { animation-delay: 0.35s; }
+    .stagger:nth-child(8) { animation-delay: 0.40s; }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50%       { transform: scale(1.5); opacity: 0; }
+    }
+    @keyframes spinBorder {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 480px) {
+      .page { padding: 2.5rem 1rem 4rem; }
+      .name { font-size: 1.1rem; }
+      .exp-card { grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
+      .exp-period { grid-column: 1; grid-row: 3; text-align: left; margin-top: 0.2rem; }
+    }
   </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
-  <div class="wrap">
+  <div class="glow-orb"></div>
+  <canvas id="bgCanvas"></canvas>
 
-    <div class="avatar">
-      <img src="https://github.com/boyvalentyas-stack.png" alt="avatar" />
-    </div>
-    <h1>Boy Valentyas Indra G.<span class="cursor">_</span></h1>
-    <p class="bio">> Quality Assurance Engineer with Experience as BA PM SA when assigned as Solution Engineer</p>
-    <p class="status open">Let’s connect if you want to talk about technology, efficiency, or building scalable digital solutions.</p>
+  <main class="page">
 
-    <hr>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="avatar-wrap">
+        <img
+          class="avatar-img"
+          src="https://github.com/boyvalentyas-stack.png"
+          alt="Boy Valentyas Indra G. — Quality Assurance & Solution Engineer"
+        />
+        <div class="status-dot" title="Open to work"></div>
+      </div>
 
-    <!-- Experience -->
-    <p class="section-label">// experience</p>
-    <div class="card">
-      <p class="exp-title">Solution Engineer</p>
-      <p class="exp-company">BFI Finance Indonesia</p>
-      <p class="exp-period">Dec 2024 — Feb 2026</p>
-    </div>
-    <div class="card">
-      <p class="exp-title">Associate Solution Engineer</p>
-      <p class="exp-company">BFI Finance Indonesia</p>
-      <p class="exp-period">Jan 2024 — Nov 2024</p>
-    </div>
-    <div class="card">
-      <p class="exp-title">Associate QA Engineer</p>
-      <p class="exp-company">BFI Finance Indonesia</p>
-      <p class="exp-period">Apr 2023 — Dec 2023</p>
-    </div>
-    <div class="card">
-      <p class="exp-title">Test Engineer</p>
-      <p class="exp-company">AbiShar Technologies Indonesia - Placed on BFI Finance</p>
-      <p class="exp-period">Aug 2021 — Apr 2023</p>
-    </div>
-    <div class="card">
-      <p class="exp-title">IT QA Automation</p>
-      <p class="exp-company">FUSI Solusi Integrasi - Placed on KSEI</p>
-      <p class="exp-period">Feb 2020 — Jul 2021</p>
-    </div>
+      <h1 class="name">boyvalentyas-stack<span class="cursor">_</span></h1>
+      <div class="title-badge">QA &amp; Solution Engineer</div>
+      <p class="bio">
+        Quality Assurance Engineer with hands-on experience as Business Analyst,
+        Project Manager, and Solution Architect when assigned as Solution Engineer.
+        Based in Jakarta, Indonesia.
+      </p>
+      <span class="open-badge">Open to work · Let's connect</span>
+    </header>
 
-    <hr>
+    <div class="divider"></div>
 
-    <!-- Tech Stacks -->
-    <p class="section-label">// tech stacks</p>
-    <div class="skills">
-      <span class="skill">JIRA</span>
-      <span class="skill">Confluence</span>
-      <span class="skill">Google Workspace</span>
-      <span class="skill">Microsoft Office</span>
-      <span class="skill">Zoom</span>
-      <span class="skill">Draw.io</span>
-      <span class="skill">Postman</span>
-      <span class="skill">Katalon</span>
-      <span class="skill">Claude.AI</span>
-      <span class="skill">Javascript</span>
-      <span class="skill">Python</span>
-      <span class="skill">PostgreSQL</span>
-    </div>
-
-    <hr>
-
-    <!-- Skills -->
-    <p class="section-label">// skills</p>
-    <div class="skills">
-      <span class="skill">Test Strategy</span>
-      <span class="skill">Manual Testing</span>
-      <span class="skill">Automation Testing</span>
-      <span class="skill">API Testing</span>
-      <span class="skill">Requirement Gathering</span>
-      <span class="skill">System Architecture Design</span>
-      <span class="skill">System Integration</span>
-      <span class="skill">Project Management</span>
-      <span class="skill">Vendor Management</span>
-      <span class="skill">Data Analysis</span>
+    <!-- EXPERIENCE -->
+    <div class="section-label">experience</div>
+    <div class="exp-list">
+      <div class="exp-card stagger">
+        <span class="exp-title">Solution Engineer</span>
+        <span class="exp-company">BFI Finance Indonesia</span>
+        <span class="exp-period">Dec 2024 – Feb 2026</span>
+      </div>
+      <div class="exp-card stagger">
+        <span class="exp-title">Associate Solution Engineer</span>
+        <span class="exp-company">BFI Finance Indonesia</span>
+        <span class="exp-period">Jan 2024 – Nov 2024</span>
+      </div>
+      <div class="exp-card stagger">
+        <span class="exp-title">Associate QA Engineer</span>
+        <span class="exp-company">BFI Finance Indonesia</span>
+        <span class="exp-period">Apr 2023 – Dec 2023</span>
+      </div>
+      <div class="exp-card stagger">
+        <span class="exp-title">Test Engineer</span>
+        <span class="exp-company">AbiShar Technologies · Placed at BFI Finance</span>
+        <span class="exp-period">Aug 2021 – Apr 2023</span>
+      </div>
+      <div class="exp-card stagger">
+        <span class="exp-title">IT QA Automation</span>
+        <span class="exp-company">FUSI Solusi Integrasi · Placed at KSEI</span>
+        <span class="exp-period">Feb 2020 – Jul 2021</span>
+      </div>
     </div>
 
-    <hr>
+    <div class="divider"></div>
 
-    <!-- Links -->
-    <p class="section-label">// find me on</p>
-    
-    <a href="https://github.com/boyvalentyas-stack/" target="_blank" rel="noopener noreferrer">
-      <span class="prefix">01.</span> GitHub <span class="arrow">-></span>
-    </a>
-    <a href="https://www.linkedin.com/in/boy-valentyas-indra-gunara-86a9ba181/" target="_blank" rel="noopener noreferrer">
-      <span class="prefix">02.</span> LinkedIn <span class="arrow">-></span>
-    </a>
-    <a href="https://boyvalentyas-stack.github.io/citra-art-frame/" target="_blank" rel="noopener noreferrer">
-      <span class="prefix">03.</span> Portofolio #1 - Family Business<span class="arrow">-></span>
-    </a>
-     <a href="https://boyvalentyas-stack.github.io/cv-generator/" target="_blank" rel="noopener noreferrer">
-      <span class="prefix">04.</span> Portofolio #2 - Free CV Maker<span class="arrow">-></span>
-    </a>
-    <a href="https://boyvalentyas-stack.github.io/snack-shop/" target="_blank" rel="noopener noreferrer">
-      <span class="prefix">05.</span> Portofolio #3 - [DEMO] Snack Shop<span class="arrow">-></span>
-    </a>
-    <a href="https://www.instagram.com/aceblanc.toujo/" target="_blank" rel="noopener noreferrer">
-      <span class="prefix">06.</span> Instagram <span class="arrow">-></span>
-    </a>
-    <a href="https://wa.me/6289636306541" target="_blank" rel="noopener noreferrer">
-      <span class="prefix">07.</span> WhatsApp <span class="arrow">-></span>
-    </a>
-    <a href="mailto:dev.boyvalentyas@email.com" target="_blank" rel="noopener noreferrer">
-      <span class="prefix">08.</span> Email me <span class="arrow">-></span>
-    </a>
+    <!-- TECH STACKS -->
+    <div class="section-label">tech stacks</div>
+    <div class="tags">
+      <span class="tag">JIRA</span>
+      <span class="tag">Confluence</span>
+      <span class="tag">Google Workspace</span>
+      <span class="tag">Microsoft Office</span>
+      <span class="tag">Draw.io</span>
+      <span class="tag">Postman</span>
+      <span class="tag">Katalon</span>
+      <span class="tag">JavaScript</span>
+      <span class="tag">Python</span>
+      <span class="tag">PostgreSQL</span>
+      <span class="tag">Claude.AI</span>
+      <span class="tag">Zoom</span>
+    </div>
 
-    <hr>
-    <p class="footer">// built with html & hosted on github pages powered by Claude.AI</p>
+    <div class="divider"></div>
 
-  </div>
+    <!-- SKILLS -->
+    <div class="section-label">skills</div>
+    <div class="tags">
+      <span class="tag">Test Strategy</span>
+      <span class="tag">Manual Testing</span>
+      <span class="tag">Automation Testing</span>
+      <span class="tag">API Testing</span>
+      <span class="tag">Requirement Gathering</span>
+      <span class="tag">System Architecture Design</span>
+      <span class="tag">System Integration</span>
+      <span class="tag">Project Management</span>
+      <span class="tag">Vendor Management</span>
+      <span class="tag">Data Analysis</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- LINKS -->
+    <div class="section-label">find me on</div>
+    <nav class="links" aria-label="Profile links">
+
+      <a class="link-btn stagger" href="https://github.com/boyvalentyas-stack/" target="_blank" rel="noopener noreferrer" title="View my GitHub profile">
+        <span class="link-num">01</span>
+        <span class="link-icon">⌥</span>
+        <span class="link-label">GitHub<span class="link-sub">boyvalentyas-stack</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a class="link-btn stagger" href="https://www.linkedin.com/in/boy-valentyas-indra-gunara-86a9ba181/" target="_blank" rel="noopener noreferrer" title="Connect with me on LinkedIn">
+        <span class="link-num">02</span>
+        <span class="link-icon">◈</span>
+        <span class="link-label">LinkedIn<span class="link-sub">Boy Valentyas Indra G.</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a class="link-btn highlight stagger" href="https://boyvalentyas-stack.github.io/citra-art-frame/" target="_blank" rel="noopener noreferrer" title="Citra Art Frame — Family Business Website">
+        <span class="link-num">03</span>
+        <span class="link-icon">◻</span>
+        <span class="link-label">Portfolio #1 — Citra Art Frame<span class="link-sub">Family business · Bilingual · Live price calculator</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a class="link-btn stagger" href="https://boyvalentyas-stack.github.io/cv-generator/" target="_blank" rel="noopener noreferrer" title="Free CV Maker — Portfolio Project">
+        <span class="link-num">04</span>
+        <span class="link-icon">◻</span>
+        <span class="link-label">Portfolio #2 — Free CV Maker<span class="link-sub">HTML · CSS · Vanilla JS</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a class="link-btn stagger" href="https://boyvalentyas-stack.github.io/snack-shop/" target="_blank" rel="noopener noreferrer" title="Snack Shop — Demo Project">
+        <span class="link-num">05</span>
+        <span class="link-icon">◻</span>
+        <span class="link-label">Portfolio #3 — Snack Shop <span style="font-size:0.65rem;color:var(--text-dim);">[DEMO]</span><span class="link-sub">HTML · CSS · Vanilla JS</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a class="link-btn stagger" href="https://www.instagram.com/aceblanc.toujo/" target="_blank" rel="noopener noreferrer" title="Follow me on Instagram">
+        <span class="link-num">06</span>
+        <span class="link-icon">◎</span>
+        <span class="link-label">Instagram<span class="link-sub">@aceblanc.toujo</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a class="link-btn stagger" href="https://wa.me/6289636306541" target="_blank" rel="noopener noreferrer" title="Chat me on WhatsApp">
+        <span class="link-num">07</span>
+        <span class="link-icon">◉</span>
+        <span class="link-label">WhatsApp<span class="link-sub">+62 896-3630-6541</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a class="link-btn stagger" href="mailto:dev.boyvalentyas@email.com" target="_blank" rel="noopener noreferrer" title="Send me an email">
+        <span class="link-num">08</span>
+        <span class="link-icon">◇</span>
+        <span class="link-label">Email<span class="link-sub">dev.boyvalentyas@email.com</span></span>
+        <span class="link-arrow">→</span>
+      </a>
+
+    </nav>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>// built with HTML &amp; CSS · hosted on <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">GitHub Pages</a> · powered by <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">Claude.AI</a></p>
+    </footer>
+
+  </main>
 
   <script>
-    const canvas = document.getElementById('matrix');
+    // ── MATRIX BACKGROUND (requestAnimationFrame + visibility pause) ──
+    const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
-    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    let animId = null;
+    let paused = false;
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
     resize();
-    window.addEventListener('resize', resize);
-    const chars = '01アイウエオカキクケコサシスセソタチツテト';
-    const cols = () => Math.floor(canvas.width / 16);
-    let drops = Array(cols()).fill(1);
-    window.addEventListener('resize', () => { drops = Array(cols()).fill(1); });
+    window.addEventListener('resize', () => { resize(); drops = Array(Math.floor(canvas.width / 18)).fill(1); });
+
+    const chars = '01アイウエオカキクケコタチツテトナニヌネノ';
+    let drops = Array(Math.floor(canvas.width / 18)).fill(1);
+
     function draw() {
-      ctx.fillStyle = 'rgba(13,13,13,0.05)';
+      if (paused) { animId = requestAnimationFrame(draw); return; }
+      ctx.fillStyle = 'rgba(8,12,10,0.06)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.font = '13px monospace';
+      ctx.font = '12px "JetBrains Mono", monospace';
       drops.forEach((y, i) => {
         const char = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillStyle = i % 5 === 0 ? '#5DCAA5' : '#0F6E56';
-        ctx.fillText(char, i * 16, y * 16);
-        if (y * 16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        // every 7th column brighter
+        ctx.fillStyle = i % 7 === 0 ? 'rgba(29,200,130,0.55)' : 'rgba(15,110,72,0.35)';
+        ctx.fillText(char, i * 18, y * 18);
+        if (y * 18 > canvas.height && Math.random() > 0.978) drops[i] = 0;
         drops[i]++;
       });
+      animId = requestAnimationFrame(draw);
     }
-    setInterval(draw, 50);
+
+    // Pause animation when tab is hidden — saves CPU
+    document.addEventListener('visibilitychange', () => {
+      paused = document.hidden;
+    });
+
+    draw();
+
+    // ── STAGGER REVEAL ON SCROLL ──
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Trigger stagger for elements already in view on load
+    document.querySelectorAll('.stagger').forEach((el, i) => {
+      el.style.animationDelay = `${0.05 + i * 0.05}s`;
+      observer.observe(el);
+    });
   </script>
 </body>
 </html>
